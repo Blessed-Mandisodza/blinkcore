@@ -8,8 +8,11 @@ export function AppHeader({
   return (
     <header className="panel-topbar">
       <div className="panel-badge">
-        <span className="panel-badge-mark">B</span>
-        <span>BlinkCore</span>
+        <img
+          className="panel-logo"
+          src="/images/IMG_9792.PNG"
+          alt="BlinkCore logo"
+        />
       </div>
 
       <div className="panel-topbar-actions">
