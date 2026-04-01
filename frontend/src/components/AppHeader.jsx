@@ -1,18 +1,35 @@
 export function AppHeader({
   avatarLabel,
   completedFields,
+  sidebarMenuOpen,
   profileExpanded,
   onNewSession,
+  onToggleSidebarMenu,
   onToggleProfile,
 }) {
   return (
     <header className="panel-topbar">
-      <div className="panel-badge">
-        <img
-          className="panel-logo"
-          src="/images/IMG_9792.PNG"
-          alt="BlinkCore logo"
-        />
+      <div className="panel-topbar-main">
+        <button
+          className="menu-button"
+          type="button"
+          aria-label={sidebarMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={sidebarMenuOpen}
+          aria-controls="workspace-sidebar"
+          onClick={onToggleSidebarMenu}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <div className="panel-badge">
+          <img
+            className="panel-logo"
+            src="/images/IMG_9792.PNG"
+            alt="BlinkCore logo"
+          />
+        </div>
       </div>
 
       <div className="panel-topbar-actions">

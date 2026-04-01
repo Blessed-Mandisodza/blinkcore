@@ -6,6 +6,7 @@ import { BusinessBriefPanel } from "./components/BusinessBriefPanel";
 import { ChatComposer } from "./components/ChatComposer";
 import { ConversationPanel } from "./components/ConversationPanel";
 import { ModeStrip } from "./components/ModeStrip";
+import { WorkspaceSidebar } from "./components/WorkspaceSidebar";
 import {
   BUSINESS_PROFILE_STORAGE_KEY,
   PROFILE_FIELDS,
@@ -28,6 +29,7 @@ function App() {
     loadStoredProfile(),
   );
   const [profileExpanded, setProfileExpanded] = useState(false);
+  const [sidebarMenuOpen, setSidebarMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -46,6 +48,24 @@ function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  useEffect(() => {
+    if (!sidebarMenuOpen || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSidebarMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [sidebarMenuOpen]);
+
   const activeMode =
     WORKSPACE_MODES.find((mode) => mode.id === workspaceMode) ||
     WORKSPACE_MODES[0];
@@ -54,6 +74,23 @@ function App() {
   const displayName = businessProfile.businessName.trim() || "Founder";
   const avatarLabel = getInitials(businessProfile.businessName || "");
   const hasConversation = messages.length > 0 || loading;
+  const recentChats = messages
+    .filter((message) => message.role === "user" && message.content.trim())
+    .slice(-4)
+    .reverse()
+    .map((message, index) => {
+      const trimmedContent = message.content.trim();
+      const label =
+        trimmedContent.length > 40
+          ? `${trimmedContent.slice(0, 40).trimEnd()}...`
+          : trimmedContent;
+
+      return {
+        id: `recent-chat-${messages.length}-${index}`,
+        content: trimmedContent,
+        label,
+      };
+    });
 
   const handleProfileChange = (event) => {
     const { name, value } = event.target;
@@ -113,14 +150,53 @@ function App() {
     setInput("");
   };
 
+  const closeSidebarMenu = () => {
+    setSidebarMenuOpen(false);
+  };
+
   return (
     <div className="app-shell">
+      <WorkspaceSidebar
+        avatarLabel={avatarLabel}
+        businessName={businessProfile.businessName}
+        menuOpen={sidebarMenuOpen}
+        profileExpanded={profileExpanded}
+        recentChats={recentChats}
+        onCloseMenu={closeSidebarMenu}
+        onNewChat={() => {
+          handleNewSession();
+          closeSidebarMenu();
+        }}
+        onOpenDashboard={() => {
+          setProfileExpanded(false);
+          closeSidebarMenu();
+        }}
+        onOpenProfile={() => {
+          setProfileExpanded((previous) => !previous);
+          closeSidebarMenu();
+        }}
+        onSelectRecentChat={(value) => {
+          setInput(value);
+          setProfileExpanded(false);
+          closeSidebarMenu();
+        }}
+      />
+      <div
+        className={`sidebar-backdrop ${sidebarMenuOpen ? "visible" : ""}`}
+        aria-hidden="true"
+        onClick={closeSidebarMenu}
+      />
+
       <main className="workspace-panel">
         <AppHeader
           avatarLabel={avatarLabel}
           completedFields={completedFields}
+          sidebarMenuOpen={sidebarMenuOpen}
           profileExpanded={profileExpanded}
           onNewSession={handleNewSession}
+          onToggleSidebarMenu={() =>
+            setSidebarMenuOpen((previous) => !previous)
+          }
           onToggleProfile={() => setProfileExpanded((previous) => !previous)}
         />
 
