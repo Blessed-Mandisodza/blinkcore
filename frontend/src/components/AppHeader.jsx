@@ -23,19 +23,19 @@ export function AppHeader({
           <span />
         </button>
 
-        <div className="panel-badge">
+        {/* <div className="panel-badge">
           <img
             className="panel-logo"
             src="/images/IMG_9792.PNG"
             alt="BlinkCore logo"
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="panel-topbar-actions">
-        <button className="ghost-button" type="button" onClick={onNewSession}>
+        {/* <button className="ghost-button" type="button" onClick={onNewSession}>
           New chat
-        </button>
+        </button> */}
         <button
           className="brief-button"
           type="button"

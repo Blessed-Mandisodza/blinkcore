@@ -8,10 +8,10 @@ export function WelcomeState({
     <>
       <section className="hero-panel">
         <p className="hero-kicker">{activeMode.eyebrow}</p>
-        <p className="hero-greeting">Hi {displayName}</p>
+        {/* <p className="hero-greeting">Hi {displayName}</p>
         <p className="hero-subcopy">
           Start a real back-and-forth conversation.
-        </p>
+        </p> */}
       </section>
 
       <section className="prompt-grid">

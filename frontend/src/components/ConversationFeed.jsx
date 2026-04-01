@@ -26,7 +26,7 @@ export function ConversationFeed({ loading, messages, messagesEndRef }) {
 
       {loading && (
         <div className="message-row message-row-assistant">
-          <div className="message-avatar">AI</div>
+          <div className="message-avatar">BC</div>
           <div className="message-card message-loading">
             <p className="message-role">BlinkCore</p>
             <p>Thinking through the best response...</p>

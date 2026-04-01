@@ -150,15 +150,27 @@ export function WorkspaceSidebar({
         </button>
       </div>
 
-      <div className="sidebar-brand">
+      <div className="panel-badge">
+        <img
+          className="panel-logo"
+          src="/images/IMG_9792.PNG"
+          alt="BlinkCore logo"
+        />
+      </div>
+
+      {/* <div className="sidebar-brand">
         <span className="sidebar-brand-mark">BC</span>
         <div className="sidebar-brand-copy">
           <p>Workspace</p>
           <strong>BlinkCore AI</strong>
         </div>
-      </div>
+      </div> */}
 
-      <button className="sidebar-primary-action" type="button" onClick={onNewChat}>
+      <button
+        className="sidebar-primary-action"
+        type="button"
+        onClick={onNewChat}
+      >
         <span className="sidebar-primary-icon">
           <SidebarIcon type="new-chat" />
         </span>
@@ -196,7 +208,10 @@ export function WorkspaceSidebar({
         />
       </nav>
 
-      <section className="sidebar-section" aria-labelledby="recent-chats-heading">
+      <section
+        className="sidebar-section"
+        aria-labelledby="recent-chats-heading"
+      >
         <div className="sidebar-section-header">
           <p id="recent-chats-heading" className="sidebar-section-title">
             Recent chats
@@ -222,21 +237,25 @@ export function WorkspaceSidebar({
           </div>
         ) : (
           <div className="sidebar-empty-state">
-            Your recent user prompts will appear here once you start chatting.
+            {/* Your recent user prompts will appear here once you start chatting. */}
           </div>
         )}
       </section>
 
-      <div className="sidebar-profile-card">
+      {/* <div className="sidebar-profile-card">
         <span className="sidebar-profile-avatar">{avatarLabel}</span>
         <div className="sidebar-profile-copy">
           <strong>{profileName}</strong>
           <span>{profileExpanded ? "Profile open" : "Profile ready"}</span>
         </div>
-        <button className="sidebar-profile-link" type="button" onClick={onOpenProfile}>
+        <button
+          className="sidebar-profile-link"
+          type="button"
+          onClick={onOpenProfile}
+        >
           Profile
         </button>
-      </div>
+      </div> */}
     </aside>
   );
 }

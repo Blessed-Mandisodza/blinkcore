@@ -4,8 +4,16 @@
   --page-bg:
     radial-gradient(circle at top, rgba(67, 103, 174, 0.34), transparent 34%),
     linear-gradient(180deg, #091224 0%, #0b1630 52%, #0f1d3d 100%);
-  --panel-bg: linear-gradient(180deg, rgba(244, 248, 255, 0.96), rgba(233, 240, 252, 0.92));
-  --sidebar-bg: linear-gradient(180deg, rgba(8, 18, 41, 0.98), rgba(10, 27, 62, 0.94));
+  --panel-bg: linear-gradient(
+    180deg,
+    rgba(244, 248, 255, 0.589),
+    rgba(233, 240, 252, 0.55)
+  );
+  --sidebar-bg: linear-gradient(
+    180deg,
+    rgba(8, 18, 41, 0.98),
+    rgba(10, 27, 62, 0.94)
+  );
   --panel-border: rgba(255, 255, 255, 0.18);
   --sidebar-border: rgba(141, 186, 255, 0.14);
   --surface: rgba(255, 255, 255, 0.72);
@@ -457,7 +465,11 @@ button {
   gap: 10px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(10, 27, 62, 0.96), rgba(16, 43, 87, 0.92));
+  background: linear-gradient(
+    135deg,
+    rgba(10, 27, 62, 0.96),
+    rgba(16, 43, 87, 0.92)
+  );
   border: 1px solid rgba(97, 157, 255, 0.22);
   box-shadow: 0 14px 28px rgba(6, 16, 38, 0.28);
   color: white;
