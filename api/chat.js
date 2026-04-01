@@ -1,5 +1,21 @@
 const { formatApiError, generateChatReply } = require("../backend/chat-service");
 
+function getRequestBody(body) {
+  if (body && typeof body === "object") {
+    return body;
+  }
+
+  if (typeof body === "string") {
+    try {
+      return JSON.parse(body);
+    } catch (error) {
+      return {};
+    }
+  }
+
+  return {};
+}
+
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -14,7 +30,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const reply = await generateChatReply(req.body);
+    const reply = await generateChatReply(getRequestBody(req.body));
     return res.status(200).json({ reply });
   } catch (error) {
     console.error("Error:", error);

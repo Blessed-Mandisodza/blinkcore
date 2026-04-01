@@ -121,9 +121,15 @@ function normalizeConversation(messages, latestMessage) {
 }
 
 function getClientSettings() {
-  const geminiApiKey = sanitizeString(process.env.GEMINI_API_KEY);
+  const geminiApiKey = sanitizeString(
+    process.env.GEMINI_API_KEY ||
+      process.env.GOOGLE_API_KEY ||
+      process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+  );
   const openAiApiKey = sanitizeString(process.env.OPENAI_API_KEY);
-  const configuredBaseUrl = sanitizeString(process.env.OPENAI_BASE_URL);
+  const configuredBaseUrl = sanitizeString(
+    process.env.GEMINI_BASE_URL || process.env.OPENAI_BASE_URL,
+  );
   const configuredModel = sanitizeString(
     process.env.GEMINI_MODEL || process.env.OPENAI_MODEL,
   );
@@ -146,7 +152,7 @@ function getClientSettings() {
 
   throw new ApiError(
     500,
-    "Missing AI API key. Set GEMINI_API_KEY or OPENAI_API_KEY in your environment.",
+    "Missing AI API key. Set GEMINI_API_KEY, GOOGLE_API_KEY, or OPENAI_API_KEY in your environment.",
   );
 }
 
@@ -248,6 +254,48 @@ function formatApiError(error) {
     return {
       statusCode: error.statusCode,
       message: error.message,
+    };
+  }
+
+  const upstreamStatusCode =
+    Number(error?.status) ||
+    Number(error?.statusCode) ||
+    Number(error?.response?.status);
+  const upstreamMessage = sanitizeString(
+    error?.response?.data?.error?.message ||
+      error?.error?.message ||
+      error?.message,
+  );
+
+  if (upstreamStatusCode === 401 || upstreamStatusCode === 403) {
+    return {
+      statusCode: upstreamStatusCode,
+      message:
+        upstreamMessage ||
+        "Authentication failed. Check your AI API key in Vercel environment variables.",
+    };
+  }
+
+  if (upstreamStatusCode === 429) {
+    return {
+      statusCode: upstreamStatusCode,
+      message:
+        upstreamMessage ||
+        "The AI provider rate-limited this request. Try again in a moment.",
+    };
+  }
+
+  if (upstreamStatusCode >= 400 && upstreamMessage) {
+    return {
+      statusCode: upstreamStatusCode,
+      message: upstreamMessage,
+    };
+  }
+
+  if (upstreamMessage) {
+    return {
+      statusCode: 500,
+      message: upstreamMessage,
     };
   }
 

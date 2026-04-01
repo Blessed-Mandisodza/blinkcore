@@ -1139,7 +1139,7 @@ button {
 
   .panel-topbar {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
   }
 
@@ -1156,7 +1156,7 @@ button {
   }
 
   .panel-topbar {
-    gap: 12px;
+    gap: 10px;
   }
 
   .menu-button {
@@ -1168,7 +1168,7 @@ button {
   }
 
   .panel-topbar-actions {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
@@ -1192,6 +1192,17 @@ button {
     justify-content: center;
     width: auto;
     max-width: 100%;
+  }
+
+  .brief-button {
+    min-height: 48px;
+    padding: 10px 14px;
+    gap: 8px;
+    border-radius: 18px;
+  }
+
+  .brief-button span:last-child {
+    white-space: nowrap;
   }
 
   .business-brief-panel {
@@ -1228,8 +1239,7 @@ button {
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 4px;
-    margin-left: -2px;
-    margin-right: -2px;
+    margin: 0 -2px;
     scrollbar-width: none;
   }
 
@@ -1253,6 +1263,7 @@ button {
   .conversation-card {
     padding: 14px;
     border-radius: 22px;
+    min-height: 320px;
     overflow: visible;
   }
 
@@ -1272,9 +1283,9 @@ button {
 
   .composer-shell {
     border-radius: 22px;
-    padding: 8px 10px;
+    padding: 10px 12px;
     gap: 10px;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .composer-mark {
@@ -1284,11 +1295,15 @@ button {
   }
 
   .composer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     gap: 10px;
   }
 
   .composer input {
     min-width: 0;
+    padding: 8px 0;
   }
 
   .composer-submit-button {
@@ -1361,14 +1376,33 @@ button {
   }
 
   .panel-topbar-actions {
+    flex: 1;
     justify-content: flex-end;
   }
 
   .ghost-button,
   .brief-button {
     min-height: 42px;
-    padding: 10px 14px;
-    font-size: 0.92rem;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+  }
+
+  .brief-button {
+    gap: 8px;
+    border-radius: 16px;
+  }
+
+  .brief-button-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+  }
+
+  .brief-button span:last-child {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .business-brief-panel {
@@ -1395,6 +1429,7 @@ button {
 
   .conversation-card {
     padding: 12px;
+    min-height: 300px;
   }
 
   .conversation-feed {
@@ -1403,14 +1438,15 @@ button {
   }
 
   .composer-shell {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
+    display: flex;
+    align-items: center;
     border-radius: 20px;
   }
 
   .composer {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
     gap: 8px;
   }
 
@@ -1428,7 +1464,6 @@ button {
     width: 48px;
     min-width: 48px;
     height: 48px;
-    justify-self: end;
     border-radius: 17px;
   }
 
