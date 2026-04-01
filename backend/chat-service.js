@@ -283,7 +283,7 @@ function formatApiError(error) {
       statusCode: upstreamStatusCode,
       message:
         upstreamMessage ||
-        "The AI provider rate-limited this request. Try again in a moment.",
+        "The AI provider rate-limited this request or the account has no remaining quota. Check your API billing/quota and try again.",
     };
   }
 

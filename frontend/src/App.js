@@ -173,8 +173,15 @@ function App() {
     } catch (error) {
       console.error("Error:", error);
 
+      const errorStatus = error.response?.status;
       const errorMessage =
         error.response?.data?.error ||
+        (errorStatus === 429
+          ? "The AI provider is rate-limiting this project or the account has no remaining quota. Check your API billing/quota and the Vercel environment variables."
+          : null) ||
+        ((errorStatus === 401 || errorStatus === 403)
+          ? "Authentication failed. Check your API key in Vercel environment variables."
+          : null) ||
         error.message ||
         "Failed to get a response from the assistant.";
 
