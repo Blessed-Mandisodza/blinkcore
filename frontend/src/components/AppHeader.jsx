@@ -1,9 +1,13 @@
+import { ModeStrip } from "./ModeStrip";
+
 export function AppHeader({
   avatarLabel,
   completedFields,
+  modes,
   sidebarMenuOpen,
   profileExpanded,
-  onNewSession,
+  workspaceMode,
+  onSelectMode,
   onToggleSidebarMenu,
   onToggleProfile,
 }) {
@@ -11,7 +15,7 @@ export function AppHeader({
     <header className="panel-topbar">
       <div className="panel-topbar-main">
         <button
-          className="menu-button"
+          className={`menu-button ${sidebarMenuOpen ? "is-open" : ""}`}
           type="button"
           aria-label={sidebarMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={sidebarMenuOpen}
@@ -23,6 +27,13 @@ export function AppHeader({
           <span />
         </button>
 
+        <ModeStrip
+          className="mode-strip-header"
+          modes={modes}
+          workspaceMode={workspaceMode}
+          onSelectMode={onSelectMode}
+        />
+
         {/* <div className="panel-badge">
           <img
             className="panel-logo"
@@ -33,9 +44,6 @@ export function AppHeader({
       </div>
 
       <div className="panel-topbar-actions">
-        {/* <button className="ghost-button" type="button" onClick={onNewSession}>
-          New chat
-        </button> */}
         <button
           className="brief-button"
           type="button"

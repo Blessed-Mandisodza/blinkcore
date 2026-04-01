@@ -20,7 +20,7 @@ export function ChatComposer({
           disabled={loading}
         />
         <button
-          className={loading ? "loading" : ""}
+          className={`composer-submit-button ${loading ? "loading" : ""}`}
           type="button"
           aria-label={buttonLabel}
           title={buttonLabel}

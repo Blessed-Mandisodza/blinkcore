@@ -191,9 +191,11 @@ function App() {
         <AppHeader
           avatarLabel={avatarLabel}
           completedFields={completedFields}
+          modes={WORKSPACE_MODES}
           sidebarMenuOpen={sidebarMenuOpen}
           profileExpanded={profileExpanded}
-          onNewSession={handleNewSession}
+          workspaceMode={workspaceMode}
+          onSelectMode={setWorkspaceMode}
           onToggleSidebarMenu={() =>
             setSidebarMenuOpen((previous) => !previous)
           }
@@ -212,6 +214,7 @@ function App() {
 
         <section className={`chat-layout ${hasConversation ? "active" : ""}`}>
           <ModeStrip
+            className="mode-strip-body"
             modes={WORKSPACE_MODES}
             workspaceMode={workspaceMode}
             onSelectMode={setWorkspaceMode}

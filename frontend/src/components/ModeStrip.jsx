@@ -1,6 +1,13 @@
-export function ModeStrip({ modes, workspaceMode, onSelectMode }) {
+export function ModeStrip({
+  className = "",
+  modes,
+  workspaceMode,
+  onSelectMode,
+}) {
+  const modeStripClassName = ["mode-strip", className].filter(Boolean).join(" ");
+
   return (
-    <div className="mode-strip">
+    <div className={modeStripClassName}>
       {modes.map((mode) => (
         <button
           key={mode.id}
