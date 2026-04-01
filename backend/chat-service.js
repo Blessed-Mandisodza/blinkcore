@@ -127,14 +127,13 @@ function getClientSettings() {
       process.env.GOOGLE_GENERATIVE_AI_API_KEY,
   );
   const openAiApiKey = sanitizeString(process.env.OPENAI_API_KEY);
-  const configuredBaseUrl = sanitizeString(
-    process.env.GEMINI_BASE_URL || process.env.OPENAI_BASE_URL,
-  );
-  const configuredModel = sanitizeString(
-    process.env.GEMINI_MODEL || process.env.OPENAI_MODEL,
-  );
 
   if (geminiApiKey) {
+    const configuredBaseUrl = sanitizeString(
+      process.env.GEMINI_BASE_URL || process.env.OPENAI_BASE_URL,
+    );
+    const configuredModel = sanitizeString(process.env.GEMINI_MODEL);
+
     return {
       apiKey: geminiApiKey,
       baseURL: configuredBaseUrl || DEFAULT_GEMINI_BASE_URL,
@@ -143,6 +142,9 @@ function getClientSettings() {
   }
 
   if (openAiApiKey) {
+    const configuredBaseUrl = sanitizeString(process.env.OPENAI_BASE_URL);
+    const configuredModel = sanitizeString(process.env.OPENAI_MODEL);
+
     return {
       apiKey: openAiApiKey,
       baseURL: configuredBaseUrl || undefined,

@@ -175,6 +175,7 @@ function App() {
 
       const errorMessage =
         error.response?.data?.error ||
+        error.message ||
         "Failed to get a response from the assistant.";
 
       setMessages((previousMessages) => [
