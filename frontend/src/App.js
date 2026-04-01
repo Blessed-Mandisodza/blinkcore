@@ -66,6 +66,47 @@ function App() {
     };
   }, [sidebarMenuOpen]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const root = document.documentElement;
+    const visualViewport = window.visualViewport;
+
+    const updateViewportVariables = () => {
+      const layoutHeight = window.innerHeight;
+      const visualHeight = visualViewport?.height || layoutHeight;
+      const offsetTop = visualViewport?.offsetTop || 0;
+      const keyboardOffset = Math.max(
+        0,
+        Math.round(layoutHeight - visualHeight - offsetTop),
+      );
+
+      root.style.setProperty(
+        "--app-mobile-height",
+        `${Math.round(visualHeight + offsetTop)}px`,
+      );
+      root.style.setProperty("--mobile-keyboard-offset", `${keyboardOffset}px`);
+      root.classList.toggle("keyboard-open", keyboardOffset > 60);
+    };
+
+    updateViewportVariables();
+
+    window.addEventListener("resize", updateViewportVariables);
+    visualViewport?.addEventListener("resize", updateViewportVariables);
+    visualViewport?.addEventListener("scroll", updateViewportVariables);
+
+    return () => {
+      window.removeEventListener("resize", updateViewportVariables);
+      visualViewport?.removeEventListener("resize", updateViewportVariables);
+      visualViewport?.removeEventListener("scroll", updateViewportVariables);
+      root.style.removeProperty("--app-mobile-height");
+      root.style.removeProperty("--mobile-keyboard-offset");
+      root.classList.remove("keyboard-open");
+    };
+  }, []);
+
   const activeMode =
     WORKSPACE_MODES.find((mode) => mode.id === workspaceMode) ||
     WORKSPACE_MODES[0];

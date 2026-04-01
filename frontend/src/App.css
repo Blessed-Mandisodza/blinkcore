@@ -1066,8 +1066,8 @@ button {
 
   .app-shell {
     height: auto;
-    min-height: 100svh;
-    min-height: 100dvh;
+    min-height: var(--app-mobile-height, 100svh);
+    min-height: var(--app-mobile-height, 100dvh);
     padding: 0;
     gap: 0;
     align-items: stretch;
@@ -1129,8 +1129,8 @@ button {
   }
 
   .workspace-panel {
-    min-height: 100svh;
-    min-height: 100dvh;
+    min-height: var(--app-mobile-height, 100svh);
+    min-height: var(--app-mobile-height, 100dvh);
     padding: max(16px, env(safe-area-inset-top)) 14px
       calc(112px + max(16px, env(safe-area-inset-bottom)));
     border-radius: 0;
@@ -1293,7 +1293,9 @@ button {
     position: fixed;
     left: 14px;
     right: 14px;
-    bottom: calc(env(safe-area-inset-bottom) + 10px);
+    bottom: calc(
+      env(safe-area-inset-bottom) + var(--mobile-keyboard-offset, 0px) + 10px
+    );
     z-index: 24;
     margin: 0;
     width: auto;
@@ -1462,7 +1464,9 @@ button {
     align-items: center;
     left: 10px;
     right: 10px;
-    bottom: calc(env(safe-area-inset-bottom) + 8px);
+    bottom: calc(
+      env(safe-area-inset-bottom) + var(--mobile-keyboard-offset, 0px) + 8px
+    );
     border-radius: 20px;
   }
 

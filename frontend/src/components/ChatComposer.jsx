@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 export function ChatComposer({
   input,
   loading,
@@ -5,18 +7,39 @@ export function ChatComposer({
   onInputChange,
   onSend,
 }) {
+  const inputRef = useRef(null);
   const buttonLabel = loading ? "Generating response" : "Send message";
+
+  const handleSend = async () => {
+    const shouldBlurForIPhone =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 760px)").matches &&
+      /iPhone/i.test(window.navigator.userAgent || "");
+
+    if (shouldBlurForIPhone) {
+      inputRef.current?.blur();
+    }
+
+    await onSend();
+  };
 
   return (
     <div className="composer-shell">
       <span className="composer-mark">BC</span>
       <div className="composer">
         <input
+          ref={inputRef}
           type="text"
           value={input}
           onChange={(event) => onInputChange(event.target.value)}
-          onKeyDown={(event) => event.key === "Enter" && void onSend()}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              void handleSend();
+            }
+          }}
           placeholder={placeholder}
+          enterKeyHint="send"
           disabled={loading}
         />
         <button
@@ -24,7 +47,7 @@ export function ChatComposer({
           type="button"
           aria-label={buttonLabel}
           title={buttonLabel}
-          onClick={() => void onSend()}
+          onClick={() => void handleSend()}
           disabled={loading}
         >
           {loading ? (
