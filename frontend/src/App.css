@@ -37,9 +37,10 @@
 html,
 body,
 #root {
+  width: 100%;
   height: 100%;
   min-height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 body {
@@ -186,6 +187,31 @@ button {
 }
 
 .sidebar-brand-copy {
+  min-width: 0;
+}
+
+.panel-topbar,
+.panel-topbar-main,
+.panel-topbar-actions,
+.brief-panel-header > div,
+.business-brief-panel,
+.chat-layout,
+.conversation-card,
+.conversation-empty-state,
+.conversation-feed,
+.hero-panel,
+.prompt-grid,
+.prompt-card,
+.composer-shell,
+.composer,
+.composer input,
+.message-row,
+.message-card,
+.sidebar-nav-content,
+.sidebar-nav-labels,
+.sidebar-recent-item,
+.sidebar-profile-card,
+.sidebar-profile-copy {
   min-width: 0;
 }
 
@@ -776,13 +802,26 @@ button {
 }
 
 .composer button {
-  min-width: 104px;
-  padding: 12px 18px;
-  border-radius: 999px;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 18px;
   background: linear-gradient(135deg, #102b57 0%, #17396f 100%);
   color: white;
   font-weight: 800;
   box-shadow: 0 16px 26px rgba(16, 43, 87, 0.22);
+}
+
+.composer button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.composer button.loading svg {
+  animation: composer-spin 0.9s linear infinite;
 }
 
 .composer button:disabled {
@@ -790,6 +829,16 @@ button {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+@keyframes composer-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .conversation-card {
@@ -858,10 +907,15 @@ button {
   box-shadow: 0 14px 28px rgba(9, 24, 52, 0.08);
 }
 
+.message-row:not(.message-row-user) .message-card {
+  max-width: min(660px, calc(100% - 48px));
+}
+
 .message-card p:last-child {
   margin: 8px 0 0;
   white-space: pre-wrap;
   word-break: break-word;
+  overflow-wrap: anywhere;
   line-height: 1.65;
 }
 
@@ -922,10 +976,26 @@ button {
 }
 
 @media (max-width: 760px) {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    overflow-y: auto;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   .app-shell {
+    height: auto;
+    min-height: 100svh;
+    min-height: 100dvh;
     padding: 0;
     gap: 0;
     align-items: stretch;
+    overflow: visible;
   }
 
   .sidebar-backdrop {
@@ -983,9 +1053,13 @@ button {
   }
 
   .workspace-panel {
-    min-height: auto;
-    padding: 16px 14px max(16px, env(safe-area-inset-bottom));
+    min-height: 100svh;
+    min-height: 100dvh;
+    padding: max(16px, env(safe-area-inset-top)) 14px
+      max(16px, env(safe-area-inset-bottom));
     border-radius: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
   }
 
   .panel-topbar,
@@ -997,7 +1071,9 @@ button {
   .panel-topbar-main {
     position: relative;
     width: 100%;
-    justify-content: center;
+    min-height: 44px;
+    justify-content: flex-start;
+    padding-left: 56px;
   }
 
   .panel-topbar {
@@ -1032,7 +1108,8 @@ button {
   .business-brief-panel {
     padding: 16px;
     border-radius: 22px;
-    max-height: 48vh;
+    max-height: none;
+    overflow: visible;
   }
 
   .brief-progress {
@@ -1087,6 +1164,7 @@ button {
   .conversation-card {
     padding: 14px;
     border-radius: 22px;
+    overflow: visible;
   }
 
   .conversation-empty-state {
@@ -1107,6 +1185,7 @@ button {
     border-radius: 22px;
     padding: 8px 10px;
     gap: 10px;
+    align-items: flex-start;
   }
 
   .composer-mark {
@@ -1119,10 +1198,13 @@ button {
     gap: 10px;
   }
 
+  .composer input {
+    min-width: 0;
+  }
+
   .composer button {
-    width: auto;
-    min-width: 86px;
-    padding: 11px 14px;
+    width: 48px;
+    height: 48px;
   }
 
   .message-row {
@@ -1130,9 +1212,13 @@ button {
   }
 
   .message-card {
-    max-width: 88%;
+    max-width: 92%;
     padding: 12px 14px;
     border-radius: 18px;
+  }
+
+  .message-row:not(.message-row-user) .message-card {
+    max-width: calc(100% - 40px);
   }
 
   .message-avatar {
@@ -1226,11 +1312,29 @@ button {
     padding-right: 2px;
   }
 
+  .composer-shell {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    border-radius: 20px;
+  }
+
+  .composer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
   .composer input {
     font-size: 0.94rem;
   }
 
   .composer button {
-    min-width: 78px;
+    width: 48px;
+    min-width: 48px;
+    justify-self: end;
+  }
+
+  .message-row:not(.message-row-user) .message-card {
+    max-width: calc(100% - 36px);
   }
 }

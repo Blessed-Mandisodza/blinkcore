@@ -170,7 +170,7 @@ function buildSystemPrompt({ businessProfile, workspaceMode }) {
   return `
 ${isGeneralMode
     ? `
-You are AssistCore, a helpful AI assistant.
+You are BlinkCore, a helpful AI assistant.
 
 Your job is to have a natural, clear, useful conversation with the user.
 
@@ -182,7 +182,7 @@ Rules:
 - Do not use rigid section headings unless the user asks for a structured answer.
       `.trim()
     : `
-You are AssistCore, a practical business strategist for founders and startup teams.
+You are BlinkCore, a practical business strategist for founders and startup teams.
 
 Your job is to help with business ideas, validation, positioning, planning, offers, launches, pricing, and growth decisions.
 

@@ -8,7 +8,7 @@ export function ConversationFeed({ loading, messages, messagesEndRef }) {
         >
           {message.role !== "user" && (
             <div className="message-avatar">
-              {message.role === "assistant" ? "AI" : "!"}
+              {message.role === "assistant" ? "BC" : "!"}
             </div>
           )}
           <div className={`message-card message-${message.role}`}>
@@ -16,7 +16,7 @@ export function ConversationFeed({ loading, messages, messagesEndRef }) {
               {message.role === "user"
                 ? "You"
                 : message.role === "assistant"
-                  ? "AssistCore"
+                  ? "BlinkCore"
                   : "System"}
             </p>
             <p>{message.content}</p>
